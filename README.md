@@ -23,9 +23,9 @@ The time series is clearly not stationary, so I decided to difference it. Below 
 
 ![images/zc_19111_ACF.png](https://github.com/CGrannan/dsc-mod-4-project-online-ds-sp-000/blob/master/images/zc_19111_ACF.png)
 
-From these graphs, I determined the order for our ARIMA model to be (0, 2, 0), so I run our model and acheive these results:
+From these graphs, I determined the order for our ARIMA model to be (0, 2, 0), so I ran our model and achieved these results:
 
-![images/Screenshot 2020-11-18 13.24.55.jpg](https://github.com/CGrannan/dsc-mod-4-project-online-ds-sp-000/blob/master/images/Screenshot 2020-11-18 13.24.55.jpg)
+![images/19111_model_results.jpg](https://github.com/CGrannan/dsc-mod-4-project-online-ds-sp-000/blob/master/images/19111_model_results.jpg)
 
 ![images/zc_19111_results.png](https://github.com/CGrannan/dsc-mod-4-project-online-ds-sp-000/blob/master/images/zc_19111_results.png)
 
