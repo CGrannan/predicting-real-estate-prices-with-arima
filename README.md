@@ -1,100 +1,72 @@
+# Real Estate Investing in Philadelphia
 
-# Module 4 -  Final Project Specifications
+### Project Overview
 
-## Introduction
+For this project I are assuming the role of a real estate investor in Philadelphia. My goal is to find the 5 best zipcodes to invest in. Specifically, I will be looking for the zipcodes with the highest return on investment (ROI), while attempting to mitigate risk. My investment period will be short term (1-3 years) as I am interested in keeping assets as fluid as possible. The data for this project comes from zillow.com and is comprised of the median home price in each zipcode in the US from April 1996 until April 2018. This file will serve as a high-level overview of the project, but I encourage you to check out the in-depth project in the notebook.ipynb file for the dataset and code.
 
-In this lesson, we'll review all the guidelines and specifications for the final project for Module 4.
+### Selecting/Cleaning the Data
 
-## Objectives
+To begin, we trim this data down to all of the zipcodes in Philadelphia, PA. This leaves us with 35 zipcodes to model. While plotting all 35 zipcodes is a bit busy, a general shape of the data can be seen with the mean and median values.
 
-* Understand all required aspects of the Final Project for Module 4
-* Understand all required deliverables
-* Understand what constitutes a successful project
+[average_prices.png](average_prices.png)
 
-### Final Project Summary
+The real estate boom and collapse is evidenced quite highly from 2004-2011 and would have a large impact on our model. I decided to begin my data at 2012 to provide a more stable data set to work with.
 
-Another module down--you're absolutely crushing it! For this project, you'll get to flex your **_Time-Series_** muscles!
+### ARIMA Modeling
 
-<img src='https://raw.githubusercontent.com/learn-co-curriculum/dsc-mod-4-project/master/images/timegif.gif'>
+After cleaning the data I began modeling on one zipcode. Here is the original time series plotted with rolling mean and std.
 
-For this module's final project, we're going to put your newfound **_Time Series Analysis_** skills to the test. You will be forecasting real estate prices of various zipcodes using data from [Zillow](https://www.zillow.com/research/data/). However, this won't be as straightforward as just running a time-series analysis--you're going to have to make some data-driven decisions and think critically along the way!
+[zc_19111.png](zc_19111.png)
 
-### The Project
+The time series is clearly not stationary, so I decided to difference it. Below is the differenced time series and its ACF and PACF.
 
-For this project, you will be acting as a consultant for a fictional real-estate investment firm. The firm has asked you what seems like a simple question:
+[zc_19111_diff.png](zc_19111_diff.png)
+[zc_19111_ACF.png](zc_19111_ACF.png)
 
-> what are the top 5 best zipcodes for us to invest in?
+From these graphs, I determined the order for our ARIMA model to be (0, 2, 0), so I run our model and acheive these results:
 
-This may seem like a simple question at first glance, but there's more than a little ambiguity here that you'll have to think through in order to provide a solid recommendation. Should your recommendation be focused on profit margins only? What about risk? What sort of time horizon are you predicting against?  Your recommendation will need to detail your rationale and answer any sort of lingering questions like these in order to demonstrate how you define "best".
+[Screenshot 2020-11-18 13.24.55.jpg](Screenshot 2020-11-18 13.24.55.jpg)
+[zc_19111_results.png](zc_19111_results.png)
 
-As mentioned previously, the data you'll be working with comes from the [Zillow Research Page](https://www.zillow.com/research/data/). However, there are many options on that page, and making sure you have exactly what you need can be a bit confusing. For simplicity's sake, we have already provided the dataset for you in this repo--you will find it in the file `zillow_data.csv`.
+The residuals don't look normally distributed, but this is the best I was able to get. My test predictions were pretty good though, achieving a RMSE of $3700. Here is an image of the test data.
 
-## The Deliverables
+[zc_19111_test.png](zc_19111_test.png)
 
-The goal of this project is to have you complete a very common real-world task in regard to Time-Series Modeling. However, real world problems often come with a significant degree of ambiguity, which requires you to use your knowledge of statistics and data science to think critically about and answer. While the main task in this project is Time-Series Modeling, that isn't the overall goal--it is important to understand that Time-Series Modeling is a tool in your toolbox, and the forecasts it provides you are what you'll use to answer important questions.
+Finally I used our model to predict prices for 3 years and calculated a return on investment for 1, 2, and 3 year periods. The return values (4%, 8%, and 12%) were not very promising and the confidence intervals on the predictions plot were large, indicating a good deal of risk. I do not advise investing in this zipcode under the current model.
 
-In short, to pass this project, demonstrating the quality and thoughtfulness of your overall recommendation is at least as important as successfully building a Time-Series model!
+[zc_19111_forecast.png](zc_19111_forecast.png)
 
-Online students should complete the following 4 deliverables for this project:
+To continue on, I used some functions to quickly model the remaining 34 zipcodes and converted the results into a dataframe. I then used this dataframe to find the 5 zipcodes that have the highest ROIs. The zipcodes 19142, 19131, 19124, 19119, and 19136 produced the best predicted ROIs in all three time periods. I then remodeled these zipcodes to take a closer look and see if I could tune the parameters. The resulting test predictions and forecasts are displayed below.
 
-* A well-documented **_Jupyter Notebook_** containing any code you've written for this project (use the notebook in this repo, `mod_4_starter_notebook.ipynb`). This work will need to be pushed to your GitHub repository in order to submit your project.
-* An organized **README.md** file in the GitHub repository that describes the contents of the repository. This file should be the source of information for navigating through the repository.
-* A **_[Blog post](https://github.com/learn-co-curriculum/dsc-welcome-blogging)_**.
-* An **_'Executive Summary' PowerPoint Presentation_** that explains your rationale and methodology for determining the best zipcodes for investment.
+Zipcode 19142:
 
-Note: On-campus students may have different deliverables, please speak with your instructor.
+[zc_19142_test.png](zc_19142_test.png)
+[zc_19142_forecast.png](zc_19142_forecast.png)
 
-### Jupyter Notebook Must-Haves
+Zipcode 19131:
 
-For this project, you will be provided with a jupyter notebook containing some starter code. If you inspect the zillow dataset file, you'll notice that the datetimes for each sale are the actual column names--this is a format you probably haven't seen before. To ensure that you're not blocked by preprocessing, we've provided some helper functions to help simplify getting the data into the correct format. You're not required to use this notebook or keep it in its current format, but we strongly recommend you consider making use of the helper functions so you can spend your time working on the parts of the project that matter.
+[zc_19131_test.png](zc_19131_test.png)
+[zc_19131_forecast.png](zc_19131_forecast.png)
 
-#### Organization/Code Cleanliness
+Zipcode 19124
 
-The notebook should be well organized, easy to follow, and code is modularized and commented where appropriate.
+[zc_19124_test.png](zc_19124_test.png)
+[zc_19124_forecast.png](zc_19124_forecast.png)
 
-* Level Up: The notebook contains well-formatted, professional looking markdown cells explaining any substantial code. All functions have docstrings that act as professional-quality documentation.
-* The notebook is written to technical audiences with a way to both understand your approach and reproduce your results. The target audience for this deliverable is other data scientists looking to validate your findings.
-* Data visualizations you create should be clearly labeled and contextualized--that is, they fit with the surrounding code or problems you're trying to solve. No dropping data visualizations randomly around your notebook without any context!
+Zipcode 19119
 
-#### Findings
+[zc_19119_test.png](zc_19119_test.png)
+[zc_19119_forecast.png](zc_19119_forecast.png)
 
-Your notebook should briefly mention the metrics you have defined as "best", so that any readers understand what technical metrics you are trying to optimize for (for instance, risk vs profitability, ROI yield, etc.). You do **not** need to explain or defend your your choices in the notebook--the blog post and executive summary presentation are both better suited to that sort of content. However, the notebook should provide enough context about your definition for "best investment" so that they understand what the code you are writing is trying to solve.
+Zipcode 19136
 
-#### Visualizations
+[zc_19136_test.png](zc_19136_test.png)
+[zc_19136_forecast.png](zc_19136_forecast.png)
 
-Time-Series Analysis is an area of data science that lends itself well to intuitive data visualizations. Whereas we may not be able to visualize the best choice in a classification or clustering problem with a high-dimensional dataset, that isn't an issue with Time Series data. As such, **_any findings worth mentioning in this problem are probably also worth visualizing_**. Your notebook should make use of data visualizations as appropriate to make your findings obvious to any readers.
+### Anaysing Results
 
-Also, remember that if a visualization is worth creating, then it's also worth taking the extra few minutes to make sure that it is easily understandable and well-formatted. When creating visualizations, make sure that they have:
+To account for risk in my investments, I look at the size of my investment (price of home in each zipcode compared to the median and mean home prices in Phily), the RMSE from the test models (representing the risk of using my model), and the shape of my confidence intervals (representing the volatility of that zipcode). From assessing these details, I concluded that zipcodes 19142, 19124, 19119, and 19136 are worth investing in because the predicted gains outweigh the risks. I would not invest in zipcode 19131 based off of this model as the testing accuracy is not strong enough to have faith in the predictions.
 
-* A title
-* Clearly labeled X and Y axes, with appropriate scale for each
-* A legend, when necessary
-* No overlapping text that makes it hard to read
-* An intelligent use of color--multiple lines should have different colors and/or symbols to make them easily differentiable to the eye
-* An appropriate amount of information--avoid creating graphs that are "too busy"--for instance, don't create a line graph with 25 different lines on it
+### Future Work
 
-<center><img src='images/bad-graph-1.png' height=100% width=100%>
-There's just too much going on in this graph for it to be readable--don't make the same mistake! (<a href='http://genywealth.com/wp-content/uploads/2010/03/line-graph.php_.png'>Source</a>)</center>
-
-### Blog Post Must-Haves
-
-Refer back to the [Blogging Guidelines](https://github.com/learn-co-curriculum/dsc-welcome-blogging) for the technical requirements and blog ideas.
-
-
-### Executive Summary Must-Haves
-
-Your presentation should:
-
-Contain between 5-10 professional quality slides detailing:
-
-* A high-level overview of your methodology and findings, including the 5 zipcodes you recommend investing in
-* A brief explanation of what metrics you defined as "best" in order complete this project
-
-As always, this prresentation should also:
-
-* Take no more than 5 minutes to present
-* Avoid technical jargon and explain results in a clear, actionable way for non-technical audiences.
-
-## Grading Rubric 
-
-Online students can find a PDF of the grading rubric for the project [here](https://github.com/learn-co-curriculum/dsc-mod-4-project/blob/master/module4_project_rubric.pdf). _Note: On-campus students may have different requirements, please speak with your instructor._
+Moving forward, I would bring in other features to the data set to see if we can refine the fit on our models. Using financial (tax rates, income levels) or social (school districts, crime rates) information would allow further tuning of our model. I would also consider using some different types of models like SARIMA to see if we can get tighter results for some of our potentially high ROI zipcodes. For now though, we have identified some good opportunities for investment!
