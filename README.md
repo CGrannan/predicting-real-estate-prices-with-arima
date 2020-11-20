@@ -75,4 +75,4 @@ To account for risk in my investments, I look at the size of my investment (pric
 
 ### Future Work
 
-Moving forward, I would bring in other features to the data set to see if we can refine the fit on our models. Using financial (tax rates, income levels) or social (school districts, crime rates) information would allow further tuning of our model. I would also consider using some different types of models like SARIMA to see if we can get tighter results for some of our potentially high ROI zipcodes. For now though, we have identified some good opportunities for investment!
+Moving forward, I would bring in other features to the dataset to see if we can refine the fit on our models. Using financial (tax rates, income levels) or social (school districts, crime rates) information would allow further tuning of our model. I would also consider using some different types of models like SARIMA to see if we can get tighter results for some of our potentially high ROI zipcodes. For now though, we have identified some good opportunities for investment!
