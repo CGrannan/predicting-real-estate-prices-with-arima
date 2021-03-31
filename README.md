@@ -2,7 +2,7 @@
 
 ### Project Overview
 
-For this project we are assuming the role of real estate investors in Philadelphia and our goal is to find the 5 best zipcodes to invest in. Specifically, we will be looking for the zipcodes with the highest return on investment (ROI), while attempting to mitigate risk. The investment period will be short term (1-3 years) as we are interested in keeping assets as fluid as possible. The data for this project comes from zillow.com and is comprised of the median home price in each zipcode in the US from April 1996 until April 2018. This file will serve as a high-level overview of the project, but I encourage you to check out the in-depth project in the notebook.ipynb file for the dataset and code.
+For this project we are assuming the role of real estate investors in Philadelphia and our goal is to find the 5 best zipcodes to invest in. Specifically, we will be looking for the zipcodes with the highest return on investment (ROI), while attempting to mitigate risk. The investment period will be short term (1-3 years) as we are interested in keeping assets as fluid as possible. The data for this project comes from zillow.com and is comprised of the median home price in each zipcode in the US from April 1996 until April 2018. This file will serve as a high-level overview of the project, but I encourage you to check out the in-depth project in the Predicting_Real_Estate_Prices.ipynb file for the dataset and code.
 
 ### Selecting/Cleaning the Data
 
